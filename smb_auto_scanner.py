@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template_string, request, send_file
 import socket
 import time
@@ -22,26 +23,26 @@ HTML_TEMPLATE = '''
 <body>
     <h1>SMB Auto Exploit Scanner</h1>
     <form method="POST">
-        <textarea name="ips" rows="10" style="width:100%;" placeholder="أدخل IPs (كل واحد في سطر)"></textarea><br><br>
-        <button type="submit">ابدأ الفحص</button>
+        <textarea name="ips" rows="10" style="width:100%;" placeholder="Enter IPs (one per line)"></textarea><br><br>
+        <button type="submit">Start Scan</button>
     </form>
 
     {% if results %}
-    <h2>نتائج الفحص:</h2>
+    <h2>Scan Results:</h2>
     <table>
-        <tr><th>IP</th><th>منفذ 445</th><th>NTLM Detected</th><th>Exploited</th></tr>
+        <tr><th>IP</th><th>Port 445</th><th>NTLM Detected</th><th>Exploited</th></tr>
         {% for r in results %}
         <tr>
             <td>{{ r.ip }}</td>
-            <td style="color: {{ 'green' if r.open else 'red' }}">{{ 'مفتوح' if r.open else 'مغلق' }}</td>
-            <td style="color: {{ 'green' if r.ntlm else 'red' }}">{{ 'نعم' if r.ntlm else 'لا' }}</td>
-            <td style="color: {{ 'green' if r.exploited else 'red' }}">{{ 'نعم' if r.exploited else 'لا' }}</td>
+            <td style="color: {{ 'green' if r.open else 'red' }}">{{ 'Open' if r.open else 'Closed' }}</td>
+            <td style="color: {{ 'green' if r.ntlm else 'red' }}">{{ 'Yes' if r.ntlm else 'No' }}</td>
+            <td style="color: {{ 'green' if r.exploited else 'red' }}">{{ 'Yes' if r.exploited else 'No' }}</td>
         </tr>
         {% endfor %}
     </table>
     <br>
     <a href="/download" target="_blank">
-        <button>تحميل التقرير PDF</button>
+        <button>Download PDF Report</button>
     </a>
     {% endif %}
 </body>
